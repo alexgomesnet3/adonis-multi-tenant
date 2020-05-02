@@ -1,9 +1,5 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
 /**
  * Resourceful controller for interacting with teams
  */
@@ -12,49 +8,61 @@ class TeamController {
    * Show a list of all teams.
    * GET teams
    */
-  async index ({ request, response, view }) {
-  }
+  async index ({ auth }) {
+    const teams = await auth.user.teams().fetch()
 
-  /**
-   * Render a form to be used for creating a new team.
-   * GET teams/create
-   */
-  async create ({ request, response, view }) {
+    return teams
   }
 
   /**
    * Create/save a new team.
    * POST teams
    */
-  async store ({ request, response }) {
+  async store ({ request, auth }) {
+    const data = request.only(['name'])
+    const team = await auth.user.teams().create([
+      ...data, user_id: auth.user.id
+    ])
+
+    return team
   }
 
   /**
    * Display a single team.
    * GET teams/:id
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params, auth }) {
+    const teams = await auth.user.teams(params.id)
+      .where('teams.id', params.id)
+      .first()
 
-  /**
-   * Render a form to update an existing team.
-   * GET teams/:id/edit
-   */
-  async edit ({ params, request, response, view }) {
+    return teams
   }
 
   /**
    * Update team details.
    * PUT or PATCH teams/:id
    */
-  async update ({ params, request, response }) {
+  async update ({ params, auth }) {
+    const data = request.only(['name'])
+    const team = await auth.user.teams(params.id)
+      .where('teams.id', params.id)
+      .first()
+    team.merge(data)
+    await team.save()
+
+    return team
   }
 
   /**
    * Delete a team with id.
    * DELETE teams/:id
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, auth }) {
+    const team = await auth.user.teams(params.id)
+      .where('teams.id', params.id)
+      .first()
+    await team.delete()
   }
 }
 
