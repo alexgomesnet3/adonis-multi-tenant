@@ -20,9 +20,7 @@ class TeamController {
    */
   async store ({ request, auth }) {
     const data = request.only(['name'])
-    const team = await auth.user.teams().create([
-      ...data, user_id: auth.user.id
-    ])
+    const team = await auth.user.teams().create({ ...data, user_id: auth.user.id })
 
     return team
   }
