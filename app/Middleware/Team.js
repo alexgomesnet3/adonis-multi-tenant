@@ -7,9 +7,11 @@ class Team {
     if (slug) {
       team = await auth.user.teams().where('slug', slug).first()
     }
+
     if (!team) {
       return response.status(401).send()
     }
+
     auth.user.currentTeam = team.id
     request.team = team
     await next()

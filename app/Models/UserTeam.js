@@ -11,6 +11,14 @@ class UserTeam extends Model {
     ]
   }
 
+  roles () {
+    return this.belongsToMany('Adonis/Acl/Role')
+  }
+
+  permission () {
+    return this.belongsToMany('Adonis/Acl/Permission')
+  }
+
   user () {
     return this.belongsTo('App/Models/User')
   }
