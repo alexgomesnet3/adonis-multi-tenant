@@ -8,6 +8,8 @@ Route.get('users', 'UserController.index')
 Route.post('users', 'UserController.store').validator('User')
 
 Route.group(() => {
+  Route.get('roles', 'RoleController.index')
+
   Route.resource('teams', 'TeamController')
     .apiOnly()
     .validator(new Map([[['team.store', 'team.update'], ['Team']]]))
