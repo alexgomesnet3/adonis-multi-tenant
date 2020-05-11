@@ -14,6 +14,7 @@ class Team {
 
     auth.user.currentTeam = team.id
     request.team = team
+
     await next()
   }
 }

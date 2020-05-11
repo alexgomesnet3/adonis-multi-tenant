@@ -1,5 +1,7 @@
 'use strict'
 
+const Role = use('Adonis/Acl/Role')
+
 /**
  * Resourceful controller for interacting with teams
  */
@@ -21,6 +23,13 @@ class TeamController {
   async store ({ request, auth }) {
     const data = request.only(['name'])
     const team = await auth.user.teams().create({ ...data, user_id: auth.user.id })
+
+    // Bellow when User created one Team, automatically this User become the admin this Team
+    const teamJoin = await auth.user.teamJoins()
+      .where('team_id', team.id)
+      .first()
+    const admin = await Role.findBy('slug', 'administrator')
+    await teamJoin.roles().attach([admin.id])
 
     return team
   }

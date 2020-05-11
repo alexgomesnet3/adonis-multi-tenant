@@ -15,7 +15,7 @@ class DatabaseSeeder {
     })
     // Create name permissions for invites and users
     const createInvite = await Permission.create({
-      slug: 'invite_create',
+      slug: 'invites_create',
       name: 'Convidar membros'
     })
 
@@ -48,7 +48,7 @@ class DatabaseSeeder {
     })
     // Below find relationship user with team
     const teamJoin = await user.teamJoins()
-      .where('id', team.id)
+      .where('team_id', team.id)
       .first()
     // Attach user team found, with respective roles and permissions
     await teamJoin.roles().attach([admin.id])

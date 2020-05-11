@@ -4,6 +4,12 @@ const User = use('App/Models/User')
 const Invite = use('App/Models/Invite')
 
 class UserController {
+  async index () {
+    const user = await User.all()
+
+    return user
+  }
+
   async store ({ request, response, auth }) {
     const data = request.only(['name', 'email', 'password'])
 
