@@ -1,6 +1,6 @@
 # Curso AdonisJS da RocketSeat - Skylab
 
-Construir um projeto de Backend SaaS com AdonisJS, utilizando uma arquitetura de desenvolvimento Multi Tenant.
+Projeto de Backend SaaS construído com AdonisJS 4, utilizando uma arquitetura de desenvolvimento Multi Tenant.
 
 <p align="center">
   <img src="Backend_AdonisJS_multi_tenant.png" alt="AdonisJS API" width="800">
